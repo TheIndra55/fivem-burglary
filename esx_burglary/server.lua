@@ -16,12 +16,12 @@ end)
 
 AddEventHandler("burglary:failed", function(house, coords, player)
 	local xPlayers = ESX.GetPlayers()
-	
+
 	for i=1, #xPlayers, 1 do
 		local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
-
-		if xPlayer.getJob() == "police" and Config.AlertPolice then
-			
+		
+		if xPlayer.getJob().name == "police" and Config.AlertPolice then
+			TriggerClientEvent("esx_burglary:police", xPlayers[i], coords, Config.BlipTime)
 		end
 	end
 end)
