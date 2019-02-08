@@ -38,6 +38,12 @@ CreateThread(function()
 			end
 		end
 		
+		if IsPedCuffed(PlayerPedId()) and onMission then
+			ShowMPMessage("~r~Burglary failed", "You got arrested.", 3500)
+			
+			ForceEndMission()
+		end
+		
 		-- check if van is not destroyed
 		if IsEntityDead(currentVan) and onMission then
 			ShowMPMessage("~r~Burglary failed", "Your van got destroyed.", 3500)
