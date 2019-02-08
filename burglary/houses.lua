@@ -33,7 +33,7 @@ houses = {
 				value = 100.0
 			}
 		},
-		-- area of the house
+		-- area around the house
 		area = {
 			vec3(266.961, -1007.903, -102.139),
 			vec3(253.130, -993.894, -96.411)
@@ -78,6 +78,39 @@ houses = {
 			vec3(352.788, -992.770, -100.424),
 			vec3(336.769, -1013.686, -96.824)
 		}
+	},
+	{
+		coords = {
+			x = 151.85, 
+			y = -1005.84, 
+			z = -99.99,
+			heading = 331.0
+		},
+		pickups = {
+			{
+				coord = vec3(153.77, -1002.303, -99.99),
+				model = "prop_big_bag_01",
+				rotation = 130.0,
+				value = 100.0
+			},
+			{
+				coord = vec3(154.43, -1007.22, -99.32),
+				model = "p_idol_case_s",
+				rotation = 180.0,
+				value = 300.0
+			},
+			{
+				coord = vec3(154.05, -1004.08, -99.35),
+				model = "prop_laptop_lester",
+				rotation = 160.0,
+				value = 150.0
+			}
+		},
+		door = vec(151.29, -1007.59, -99.0),
+		area = {
+			vec3(150.4088, -1008.27, -95.3106),
+			vec3(155.50, -999.65, -100.704)
+		}
 	}
 }
 
@@ -108,7 +141,7 @@ doors = {
 		}
 	},
 	{
-		house = 1,
+		house = 3,
 		coords = {
 			x = 455.21,
 			y = -1579.75,
@@ -142,5 +175,13 @@ residents = {
 		animation = { dict = "amb@lo_res_idles@", anim = "lying_face_up_lo_res_base" },
 		model = "a_m_y_beach_02",
 		aggressive = true
+	},
+	{
+		house = 3,
+		coord = vec3(154.16, -1004.89, -99.41),
+		rotation = 270.0,
+		animation = { dict = "amb@lo_res_idles@", anim = "lying_face_up_lo_res_base" },
+		model = "a_f_y_hiker_01",
+		aggressive = false
 	}
 }
