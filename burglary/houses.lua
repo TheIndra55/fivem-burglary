@@ -111,6 +111,34 @@ houses = {
 			vec3(150.4088, -1008.27, -95.3106),
 			vec3(155.50, -999.65, -100.704)
 		}
+	},
+	{
+		coords = {
+			x = 172.76,
+			y = -1006.09,
+			z = -99.0,
+			heading = 335.0
+		},
+		-- lower values as this "house" contains no resident
+		pickups = {
+			{
+				coord = vec3(169.78, -1000.8, -99.9),
+				model = "prop_battery_01",
+				rotation = 110.0,
+				value = 40.0
+			},
+			{
+				coord = vec3(176.44, -1004.42, -99.9),
+				model = "prop_tool_cable02",
+				rotation = 45.0,
+				value = 60.0
+			}
+		},
+		door = vec3(172.9, -1008.34, -99.0),
+		area = {
+			vec3(168.199, -1008.719, -96.400),
+			vec3(181.75, -998.9144, -99.97)
+		}
 	}
 }
 
@@ -154,6 +182,14 @@ doors = {
 			x = 256.57,
 			y = -2023.59,
 			z = 19.27
+		}
+	},
+	{
+		house = 4,
+		coords = {
+			x = -93.44,
+			y = -1787.61,
+			z = 28.82
 		}
 	}
 }
