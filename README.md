@@ -1,5 +1,5 @@
 # FiveM Burglary Script
-This is a script for FiveM which allows players to break into houses and steal items, players can be busted by the residents or earn 'X' amount of money if they manage to not get busted. This script is based on GTA San Andreas' Burglary/Home Invasion.
+This is a script for FiveM which allows players to break into houses and steal items, players can be busted by the residents or earn 'X' amount of money if they manage not to. This script is based on GTA San Andreas' Burglary/Home Invasion.
 
 ## Features
 * Configurable houses, pickups and residents
