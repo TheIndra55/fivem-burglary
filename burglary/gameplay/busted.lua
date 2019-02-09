@@ -10,7 +10,7 @@ CreateThread(function()
 			if GetCurrentHouse() then
 				-- mission failed we'll get em next time
 				ShowMPMessage("~r~Burglary failed", "You didn't leave the house before daylight.", 3500)
-				TriggerServerEvent("burglary:ended", true, lastDoor)
+				TriggerServerEvent("burglary:ended", true, true, lastDoor)
 			else
 				-- player made it before time
 				TriggerServerEvent("burglary:ended", false)
@@ -22,7 +22,7 @@ CreateThread(function()
 		if onMission then		
 			if CanPedHearPlayer(PlayerId(), peds[1]) then
 				ShowMPMessage("~r~Burglary failed", "You woke up a resident.", 3500)
-				TriggerServerEvent("burglary:ended", true, lastDoor)
+				TriggerServerEvent("burglary:ended", true, true, lastDoor)
 				
 				ClearPedTasks(peds[1])
 				PlayPain(peds[1], 7, 0)
@@ -40,6 +40,14 @@ CreateThread(function()
 		
 		if IsPedCuffed(PlayerPedId()) and onMission then
 			ShowMPMessage("~r~Burglary failed", "You got arrested.", 3500)
+			TriggerServerEvent("burglary:ended", true, false)
+			
+			ForceEndMission()
+		end
+		
+		-- cancel mission if player is dead
+		if IsPedDeadOrDying(PlayerPedId()) then
+			TriggerServerEvent("burglary:ended", true, false)
 			
 			ForceEndMission()
 		end
@@ -47,6 +55,7 @@ CreateThread(function()
 		-- check if van is not destroyed
 		if IsEntityDead(currentVan) and onMission then
 			ShowMPMessage("~r~Burglary failed", "Your van got destroyed.", 3500)
+			TriggerServerEvent("burglary:ended", true, false)
 			
 			ForceEndMission()
 		end
@@ -70,6 +79,7 @@ function ForceEndMission()
 	SetPedCanSwitchWeapon(PlayerPedId(), not isHolding)
 	
 	onMission = false
+	SetVehicleAsNoLongerNeeded(currentVan)
 	
 	RemoveBlips()
 	RemovePickups()

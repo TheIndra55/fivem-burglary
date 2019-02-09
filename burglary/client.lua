@@ -55,6 +55,7 @@ CreateThread(function()
 					end
 					
 					currentVan = veh
+					SetEntityAsMissionEntity(veh, false, false)
 					
 					ShowMPMessage("Burglary", "Find a ~r~house ~s~to rob.", 3500)
 					--ShowSubtitle("Find a ~r~house ~s~ to rob")
