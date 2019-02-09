@@ -1,8 +1,8 @@
 # FiveM Burglary Script
-This is a script for FiveM which allows players to break into houses and steal items, players can be busted by the residents or earn a x amount of money if they manage to not get busted. This script was based on GTA San Andreas Burglary/Home Invasion.
+This is a script for FiveM which allows players to break into houses and steal items, players can be busted by the residents or earn 'X' amount of money if they manage to not get busted. This script is based on GTA San Andreas' Burglary/Home Invasion.
 
 ## Features
-* Houses, pickups and residents configurable
+* Configurable houses, pickups and residents
 * Noise detection
 * Standalone
 * Time based
@@ -11,7 +11,7 @@ This is a script for FiveM which allows players to break into houses and steal i
 ## How to use
 1. Clone or download the required files
 2. Put burglary (optional esx_burglary) in your resources folder
-3. Add to `start burglary` (optional also `start esx_burglary`) to your server.cfg
+3. Add `start burglary` (optional also `start esx_burglary`) to your server.cfg
 
 Now find a boxville van and get into it, if its between 0:00am and 5:30am you should be able to start a burglary mission by pressing E inside.
 
