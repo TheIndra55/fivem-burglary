@@ -53,12 +53,12 @@ CreateThread(function()
 		end
 		
 		-- check if van is not destroyed
-		if IsEntityDead(currentVan) and onMission then
+		--[[if IsEntityDead(currentVan) and onMission then
 			ShowMPMessage("~r~Burglary failed", "Your van got destroyed.", 3500)
 			TriggerServerEvent("burglary:ended", true, false)
 			
 			ForceEndMission()
-		end
+		end]]--
 	end
 end)
 
