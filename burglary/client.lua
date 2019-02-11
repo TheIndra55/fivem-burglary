@@ -7,6 +7,8 @@ pickups = {}
 lastDoor = 1
 currentVan = nil
 
+shouldDraw = false
+
 missionVehicles = {
 	"boxville",
 	"boxville2",
@@ -108,6 +110,8 @@ CreateThread(function()
 						SetEntityHeading(PlayerPedId(), house.coords.heading)
 						
 						lastDoor = k
+						shouldDraw = true
+						
 						SpawnResidents(door.house)
 						
 						SpawnPickups(door.house, k)
@@ -121,7 +125,7 @@ CreateThread(function()
 		-- check inside
 		for _,house in pairs(houses) do
 			--DrawBox(house.area[1], house.area[2], 255, 255, 255, 50)
-			if IsEntityInArea(PlayerPedId(), house.area[1], house.area[2], 0, 0, 0) then
+			if IsEntityInArea(PlayerPedId(), house.area[1], house.area[2], 0, 0, 0) and shouldDraw then
 				if onMission then
 					DrawNoiseBar(GetPlayerCurrentStealthNoise(PlayerId()), 3)
 				end
@@ -135,6 +139,8 @@ CreateThread(function()
 					SetEntityCoords(PlayerPedId(), door.coords.x, door.coords.y, door.coords.z)
 					RemoveResidents()
 					RemovePickups()
+					
+					shouldDraw = false
 					
 					-- play holding anim if holding something after teleported outside
 					if isHolding then
