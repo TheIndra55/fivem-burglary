@@ -18,7 +18,7 @@ CreateThread(function()
 		
 		if isHolding then
 			-- draws marker at our van
-			local markerCoords = GetOffsetFromEntityInWorldCoords(currentVan, 0.0, -4.5, -1.8)
+			local markerCoords = GetOffsetFromEntityInWorldCoords(NetToVeh(currentVan), 0.0, -4.5, -1.8)
 			
 			DrawMarker(1, markerCoords, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.5, 1.5, 2.5, 204, 255, 0, 50, false, true, 2, nil, nil, false)
 			

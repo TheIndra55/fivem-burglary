@@ -56,7 +56,7 @@ CreateThread(function()
 						table.insert(blips, blip)
 					end
 					
-					currentVan = veh
+					currentVan = VehToNet(veh)
 					SetEntityAsMissionEntity(veh, false, false)
 					
 					ShowMPMessage("Burglary", "Find a ~r~house ~s~to rob.", 3500)

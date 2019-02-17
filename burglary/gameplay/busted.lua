@@ -79,7 +79,7 @@ function ForceEndMission()
 	SetPedCanSwitchWeapon(PlayerPedId(), not isHolding)
 	
 	onMission = false
-	SetVehicleAsNoLongerNeeded(currentVan)
+	SetVehicleAsNoLongerNeeded(NetToVeh(currentVan))
 	
 	RemoveBlips()
 	RemovePickups()
