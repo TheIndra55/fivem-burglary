@@ -25,4 +25,7 @@ This is a little resource which makes it work with ESX, including
 * Giving money to ESX user
 * Alerting police if busted
 
+### Requires:
+* esx_skin (for Suspect description)
+
 Can also be used as example for making another framework implementation

@@ -24,3 +24,9 @@ function TimeToSeconds(hou, min, sec)
     
     return sec
 end
+
+function GetStreet(x, y, z)
+	local streetHash = GetStreetNameAtCoord(x, y, z)
+	
+	return GetStreetNameFromHashKey(streetHash)
+end

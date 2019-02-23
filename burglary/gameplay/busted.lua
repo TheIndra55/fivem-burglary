@@ -4,13 +4,15 @@ CreateThread(function()
 	while true do
 		Wait(0)
 		
+		local door = doors[lastDoor].coords
+		
 		-- if time is up
 		if TimeToSeconds(GetClockTime()) > TimeToSeconds(5, 30, 0) and onMission then
 			-- if still in the house
 			if GetCurrentHouse() then
 				-- mission failed we'll get em next time
 				ShowMPMessage("~r~Burglary failed", "You didn't leave the house before daylight.", 3500)
-				TriggerServerEvent("burglary:ended", true, true, lastDoor)
+				TriggerServerEvent("burglary:ended", true, true, lastDoor, GetStreet(door.x, door.y, door.z))
 			else
 				-- player made it before time
 				TriggerServerEvent("burglary:ended", false)
@@ -22,7 +24,7 @@ CreateThread(function()
 		if onMission then		
 			if CanPedHearPlayer(PlayerId(), peds[1]) then
 				ShowMPMessage("~r~Burglary failed", "You woke up a resident.", 3500)
-				TriggerServerEvent("burglary:ended", true, true, lastDoor)
+				TriggerServerEvent("burglary:ended", true, true, lastDoor, GetStreet(door.x, door.y, door.z))
 				
 				ClearPedTasks(peds[1])
 				PlayPain(peds[1], 7, 0)

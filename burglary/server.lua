@@ -19,7 +19,7 @@ onNet('burglary:collected', function (item, house)
 	insert(source, { item = item, house = house })
 end)
 
-onNet('burglary:ended', function (failed, alert, door)
+onNet('burglary:ended', function (failed, alert, door, street)
 	if not failed then
 		if robbers[source] then
 			local sum = 0
@@ -50,7 +50,7 @@ onNet('burglary:ended', function (failed, alert, door)
 			-- house = houseid
 			-- coords = door coordinates of house
 			-- source = source of player failing
-			TriggerEvent("burglary:failed", doors[door].house, doors[door].coords, source)
+			TriggerEvent("burglary:failed", doors[door].house, doors[door].coords, source, street)
 		end
 		
 		if robbers[source] then
