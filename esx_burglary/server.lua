@@ -7,8 +7,8 @@ TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 AddEventHandler("burglary:money", function(sum, player)
 	local xPlayer = ESX.GetPlayerFromId(player)
 	
-	if Config.GiveDark then
-		xPlayer.addAccountMoney('Dark_money', sum)
+	if Config.GiveBlack then
+		xPlayer.addAccountMoney('black_money', sum)
 	else
 		xPlayer.addMoney(sum)
 	end
