@@ -16,7 +16,7 @@ missionVehicles = {
 	"boxville4"
 }
 
-CreateThread(function()
+Citizen.CreateThread(function()
 	if not HasStreamedTextureDictLoaded('timerbars') then
 		RequestStreamedTextureDict('timerbars')
 		while not HasStreamedTextureDictLoaded('timerbars') do
@@ -29,7 +29,7 @@ CreateThread(function()
 	RequestIpl("hei_hw1_blimp_interior_v_apart_midspaz_milo_")
 
 	while true do
-		Wait(0)
+		Citizen.Wait(0)
 		
 		-- if pressed E in a vehicle and not onMission
 		if IsControlJustPressed(0, 51) and not onMission and IsPedInAnyVehicle(PlayerPedId()) then
@@ -43,7 +43,7 @@ CreateThread(function()
 					onMission = true
 					
 					-- spawn blips
-					for _,door in pairs(doors) do
+					for _, door in pairs(doors) do
 						local blip = AddBlipForCoord(door.coords.x, door.coords.y, door.coords.z)
 						SetBlipSprite(blip, 40)
 						SetBlipColour(blip, 1)
@@ -66,13 +66,12 @@ CreateThread(function()
 				end
 			end
 		end
-		
 	end
 end)
 
-CreateThread(function()
+Citizen.CreateThread(function()
 	while true do
-		Wait(0)
+		Citizen.Wait(0)
 		
 		if onMission then
 			-- maths to calculate time until daylight
@@ -87,13 +86,14 @@ CreateThread(function()
 	end
 end)
 
-CreateThread(function()
+Citizen.CreateThread(function()
 	while true do
-		Wait(0)
+        Citizen.Wait(0)
+        
 		local coords = GetEntityCoords(PlayerPedId())
 		
 		if onMission then		
-			for k,door in pairs(doors) do
+			for k, door in pairs(doors) do
 				-- draw marker
 				if Vdist(coords, door.coords.x, door.coords.y, door.coords.z) < 100 then
 					DrawMarker(0, door.coords.x, door.coords.y, door.coords.z + 0.2, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 204, 255, 0, 50, true, true, 2, nil, nil, false)
@@ -113,7 +113,6 @@ CreateThread(function()
 						shouldDraw = true
 						
 						SpawnResidents(door.house)
-						
 						SpawnPickups(door.house, k)
 						
 						ShowSubtitle("You are in the house now, be carefull to not make too much noise. (sneaking)")
@@ -123,7 +122,7 @@ CreateThread(function()
 		end
 		
 		-- check inside
-		for _,house in pairs(houses) do
+		for _, house in pairs(houses) do
 			--DrawBox(house.area[1], house.area[2], 255, 255, 255, 50)
 			if IsEntityInArea(PlayerPedId(), house.area[1], house.area[2], 0, 0, 0) and shouldDraw then
 				if onMission then
@@ -136,7 +135,8 @@ CreateThread(function()
 				if Vdist(coords, house.door) < 1 then
 					local door = doors[lastDoor]
 				
-					SetEntityCoords(PlayerPedId(), door.coords.x, door.coords.y, door.coords.z)
+                    SetEntityCoords(PlayerPedId(), door.coords.x, door.coords.y, door.coords.z)
+                    
 					RemoveResidents()
 					RemovePickups()
 					
@@ -153,7 +153,7 @@ CreateThread(function()
 end)
 
 function SpawnPickups(house, door)
-	for k,pickup in pairs(houses[house].pickups) do
+	for k, pickup in pairs(houses[house].pickups) do
 		if not IsAlreadyStolen(door, k) then
 			-- spawn prop
 			RequestModel(pickup.model)
@@ -184,7 +184,7 @@ function SpawnPickups(house, door)
 end
 
 function RemovePickups()
-	for k,pickup in pairs(pickups) do
+	for k, pickup in pairs(pickups) do
 		RemoveBlip(pickup.blip)
 		
 		SetObjectAsNoLongerNeeded(pickup.prop)
@@ -195,7 +195,7 @@ function RemovePickups()
 end
 
 function SpawnResidents(house)
-	for _,resident in pairs(residents) do
+	for _, resident in pairs(residents) do
 		if resident.house == house then
 			RequestModel(resident.model)
 		
@@ -228,7 +228,7 @@ function SpawnResidents(house)
 end
 
 function RemoveResidents()
-	for k,ped in pairs(peds) do
+	for k, ped in pairs(peds) do
 		SetPedAsNoLongerNeeded(ped)
 		DeletePed(ped)
 	end
@@ -237,7 +237,7 @@ function RemoveResidents()
 end
 
 function IsAlreadyStolen(door, id)
-	for _,v in pairs(stolenItems) do
+	for _, v in pairs(stolenItems) do
 		if v.door == door and v.id == id then
 			return true
 		end
@@ -247,7 +247,7 @@ function IsAlreadyStolen(door, id)
 end
 
 function GetCurrentHouse()
-	for index,house in pairs(houses) do
+	for index, house in pairs(houses) do
 		if IsEntityInArea(PlayerPedId(), house.area[1], house.area[2], 0, 0, 0) then
 			return true, index
 		end
@@ -257,7 +257,7 @@ function GetCurrentHouse()
 end
 
 function RemoveBlips()
-	for _,blip in pairs(blips) do
+	for _, blip in pairs(blips) do
 		RemoveBlip(blip)
 	end
 	
@@ -265,7 +265,7 @@ function RemoveBlips()
 end
 
 function IsMissionVehicle(model)
-	for _,v in pairs(missionVehicles) do
+	for _, v in pairs(missionVehicles) do
 		if model == GetHashKey(v) then
 			return true
 		end
