@@ -48,7 +48,7 @@ CreateThread(function()
 		end
 		
 		-- cancel mission if player is dead
-		if IsPedDeadOrDying(PlayerPedId()) then
+		if IsPedDeadOrDying(PlayerPedId()) and onMission then
 			TriggerServerEvent("burglary:ended", true, false)
 			
 			ForceEndMission()
