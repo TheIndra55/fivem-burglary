@@ -8,13 +8,27 @@ lastDoor = 1
 currentVan = nil
 
 shouldDraw = false
+inMissionVehicle = false
 
 missionVehicles = {
-	"boxville",
-	"boxville2",
-	"boxville3",
-	"boxville4"
+	`boxville`,
+	`boxville2`,
+	`boxville3`,
+	`boxville4`
 }
+
+-- slower thread in idle state
+CreateThread(function()
+	while true do
+		Wait(2000)
+
+		local player = PlayerPedId()
+		if IsPedInAnyVehicle(player) then
+			local vehicle = GetVehiclePedIsIn(player)
+			inMissionVehicle = IsMissionVehicle(GetEntityModel(vehicle))
+		end
+	end
+end)
 
 CreateThread(function()
 	if not HasStreamedTextureDictLoaded('timerbars') then
@@ -32,7 +46,7 @@ CreateThread(function()
 		Wait(0)
 		
 		-- if pressed E in a vehicle and not onMission
-		if IsControlJustPressed(0, 51) and not onMission and IsPedInAnyVehicle(PlayerPedId()) then
+		if inMissionVehicle and not onMission and IsControlJustPressed(0, 51) then
 			local veh = GetVehiclePedIsIn(PlayerPedId(), false)
 			
 			if IsMissionVehicle(GetEntityModel(veh)) then
@@ -90,9 +104,10 @@ end)
 CreateThread(function()
 	while true do
 		Wait(0)
-		local coords = GetEntityCoords(PlayerPedId())
 		
 		if onMission then		
+			local coords = GetEntityCoords(PlayerPedId())
+
 			for k,door in pairs(doors) do
 				-- draw marker
 				if Vdist(coords, door.coords.x, door.coords.y, door.coords.z) < 100 then
@@ -122,29 +137,33 @@ CreateThread(function()
 			end
 		end
 		
-		-- check inside
-		for _,house in pairs(houses) do
-			--DrawBox(house.area[1], house.area[2], 255, 255, 255, 50)
-			if IsEntityInArea(PlayerPedId(), house.area[1], house.area[2], 0, 0, 0) and shouldDraw then
-				if onMission then
-					DrawNoiseBar(GetPlayerCurrentStealthNoise(PlayerId()), 3)
-				end
-				
-				-- draw exit doors in houses (even if not in mission)
-				DrawMarker(0, house.door, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 204, 255, 0, 50, true, true, 2, nil, nil, false)
-				
-				if Vdist(coords, house.door) < 1 then
-					local door = doors[lastDoor]
-				
-					SetEntityCoords(PlayerPedId(), door.coords.x, door.coords.y, door.coords.z)
-					RemoveResidents()
-					RemovePickups()
+		if shouldDraw then
+			local coords = GetEntityCoords(PlayerPedId())
+
+			-- check inside
+			for _,house in pairs(houses) do
+				--DrawBox(house.area[1], house.area[2], 255, 255, 255, 50)
+				if IsEntityInArea(PlayerPedId(), house.area[1], house.area[2], 0, 0, 0) then
+					if onMission then
+						DrawNoiseBar(GetPlayerCurrentStealthNoise(PlayerId()), 3)
+					end
 					
-					shouldDraw = false
+					-- draw exit doors in houses (even if not in mission)
+					DrawMarker(0, house.door, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 204, 255, 0, 50, true, true, 2, nil, nil, false)
+
+					if Vdist(coords, house.door) < 1 then
+						local door = doors[lastDoor]
 					
-					-- play holding anim if holding something after teleported outside
-					if isHolding then
-						TaskPlayAnim(PlayerPedId(), "anim@heists@box_carry@", "walk", 1.0, 1.0, -1, 1 | 16 | 32, 0.0, 0, 0, 0)
+						SetEntityCoords(PlayerPedId(), door.coords.x, door.coords.y, door.coords.z)
+						RemoveResidents()
+						RemovePickups()
+						
+						shouldDraw = false
+						
+						-- play holding anim if holding something after teleported outside
+						if isHolding then
+							TaskPlayAnim(PlayerPedId(), "anim@heists@box_carry@", "walk", 1.0, 1.0, -1, 1 | 16 | 32, 0.0, 0, 0, 0)
+						end
 					end
 				end
 			end
@@ -214,7 +233,7 @@ function SpawnResidents(house)
 			end
 			
 			if resident.aggressive then
-				GiveWeaponToPed(ped, GetHashKey("WEAPON_PISTOL"), 255, true, false)
+				GiveWeaponToPed(ped, `WEAPON_PISTOL`, 255, true, false)
 			end
 			
 			TaskPlayAnimAdvanced(ped, resident.animation.dict, resident.animation.anim, resident.coord, 0.0, 0.0, resident.rotation, 8.0, 1.0, -1, 1, 1.0, true, true)
@@ -266,7 +285,7 @@ end
 
 function IsMissionVehicle(model)
 	for _,v in pairs(missionVehicles) do
-		if model == GetHashKey(v) then
+		if model == v then
 			return true
 		end
 	end

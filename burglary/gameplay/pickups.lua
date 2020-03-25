@@ -14,10 +14,10 @@ CreateThread(function()
 
 	while true do
 		Wait(0)
-		local coords = GetEntityCoords(PlayerPedId())
 		
 		if isHolding then
 			-- draws marker at our van
+			local coords = GetEntityCoords(PlayerPedId())
 			local markerCoords = GetOffsetFromEntityInWorldCoords(NetToVeh(currentVan), 0.0, -4.5, -1.8)
 			
 			DrawMarker(1, markerCoords, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.5, 1.5, 2.5, 204, 255, 0, 50, false, true, 2, nil, nil, false)
@@ -61,8 +61,9 @@ CreateThread(function()
 					end
 				end
 			end
-		else
+		elseif onMission then
 			for _,pickup in pairs(pickups) do
+				local coords = GetEntityCoords(PlayerPedId())
 				local pickupCoord = GetEntityCoords(pickup.prop)
 				local min, max = GetModelDimensions(GetEntityModel(pickup.prop))
 				
@@ -84,7 +85,7 @@ CreateThread(function()
 						
 						currentItem = pickup.item
 						
-						SetCurrentPedWeapon(PlayerPedId(), GetHashKey("weapon_unarmed"), true)
+						SetCurrentPedWeapon(PlayerPedId(), `weapon_unarmed`, true)
 						SetPedCanSwitchWeapon(PlayerPedId(), not isHolding)
 						
 						ShowSubtitle("You picked up an item, bring it to the van outside.")
