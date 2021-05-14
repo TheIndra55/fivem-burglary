@@ -65,7 +65,6 @@ AddEventHandler("burglary:failed", function(house, coords, player, street)
 end)
 
 genders = {
-	-- only 2 genders exists deal with it
 	[0] = "Male",
 	[1] = "Female"
 }
