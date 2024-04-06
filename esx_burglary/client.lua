@@ -7,7 +7,6 @@ function ShowNotification(text)
 end
 
 RegisterNetEvent("esx_burglary:police")
-
 AddEventHandler("esx_burglary:police", function(coords, blipTime)
 	local streetHash = GetStreetNameAtCoord(coords.x, coords.y, coords.z)
 	local street = GetStreetNameFromHashKey(streetHash)

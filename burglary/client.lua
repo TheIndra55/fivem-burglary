@@ -11,10 +11,10 @@ shouldDraw = false
 inMissionVehicle = false
 
 missionVehicles = {
-	`boxville`,
-	`boxville2`,
-	`boxville3`,
-	`boxville4`
+	'boxville',
+	'boxville2',
+	'boxville3',
+	'boxville4'
 }
 
 -- slower thread in idle state
@@ -74,7 +74,6 @@ CreateThread(function()
 					SetEntityAsMissionEntity(veh, false, false)
 					
 					ShowMPMessage("Burglary", "Find a ~r~house ~s~to rob.", 3500)
-					--ShowSubtitle("Find a ~r~house ~s~ to rob")
 				else
 					DisplayHelpText("Burglary missions can only be started from 0:00 - 5:30 AM.")
 				end
@@ -131,7 +130,7 @@ CreateThread(function()
 						
 						SpawnPickups(door.house, k)
 						
-						ShowSubtitle("You are in the house now, be carefull to not make too much noise. (sneaking)")
+						ShowSubtitle("You are in the house now, be careful to not make too much noise. (Maybe try sneaking?)")
 					end
 				end
 			end
@@ -142,7 +141,6 @@ CreateThread(function()
 
 			-- check inside
 			for _,house in pairs(houses) do
-				--DrawBox(house.area[1], house.area[2], 255, 255, 255, 50)
 				if IsEntityInArea(PlayerPedId(), house.area[1], house.area[2], 0, 0, 0) then
 					if onMission then
 						DrawNoiseBar(GetPlayerCurrentStealthNoise(PlayerId()), 3)
