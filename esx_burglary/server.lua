@@ -1,26 +1,19 @@
 -- ESX implementation for burglary script
-
-ESX = nil
-
-TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-
 AddEventHandler("burglary:money", function(sum, player)
 	local xPlayer = ESX.GetPlayerFromId(player)
 	
 	if Config.GiveBlack then
-		xPlayer.addAccountMoney('black_money', sum)
+		xPlayer.addInventoryItem(Config.DirtyMoneyItem, sum)
 	else
 		xPlayer.addMoney(sum)
 	end
 end)
 
 AddEventHandler("burglary:failed", function(house, coords, player, street)
-	local xPlayers = ESX.GetPlayers()
+	if Config.AlertPolice then
+		local xPlayers = ESX.GetExtendedPlayers('job', 'police')
 
-	for i=1, #xPlayers, 1 do
-		local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
-		
-		if xPlayer.getJob().name == "police" and Config.AlertPolice then
+		for _, xPlayer in pairs(xPlayers) do
 			TriggerClientEvent("esx_burglary:police", xPlayers[i], coords, Config.BlipTime)
 		end
 	end
@@ -31,7 +24,7 @@ AddEventHandler("burglary:failed", function(house, coords, player, street)
 		local xBurglar = ESX.GetPlayerFromId(player)
 		
 		-- request burglar skin for suspect description
-		MySQL.Async.fetchAll('SELECT skin FROM users WHERE identifier = @identifier', {
+		MySQL.query('SELECT skin FROM users WHERE identifier = @identifier', {
 			['@identifier'] = xBurglar.identifier
 		}, function(users)
 			local user = users[1]
