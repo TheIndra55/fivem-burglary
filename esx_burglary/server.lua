@@ -24,7 +24,7 @@ AddEventHandler("burglary:failed", function(house, coords, player, street)
 		local xBurglar = ESX.GetPlayerFromId(player)
 		
 		-- request burglar skin for suspect description
-		MySQL.query.await('SELECT skin FROM users WHERE identifier = @identifier', {
+		MySQL.query('SELECT skin FROM users WHERE identifier = @identifier', {
 			['@identifier'] = xBurglar.identifier
 		}, function(users)
 			local user = users[1]
