@@ -11,10 +11,10 @@ shouldDraw = false
 inMissionVehicle = false
 
 missionVehicles = {
-	'boxville',
-	'boxville2',
-	'boxville3',
-	'boxville4'
+	`boxville`,
+	`boxville2`,
+	`boxville3`,
+	`boxville4`
 }
 
 -- slower thread in idle state
